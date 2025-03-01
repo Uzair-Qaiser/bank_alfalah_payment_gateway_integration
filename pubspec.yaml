@@ -1,6 +1,9 @@
 name: bank_alfalah_payment_gateway_integration
-description: "Bank Alfalah payment gateway integration flutter"
-version: 0.0.6
+description: "A Flutter package for integrating Bank Alfalah's Payment Gateway(Page Redirection 
+  seamlessly using WebView. It simplifies the payment process, 
+  handles success and failure responses, and provides an easy setup 
+  without requiring PHP or outdated API samples."
+version: 1.0.0
 homepage: https://github.com/Uzair-Qaiser/bank_alfalah_payment_gateway_integration.git
 repository: https://github.com/Uzair-Qaiser/bank_alfalah_payment_gateway_integration.git
 
