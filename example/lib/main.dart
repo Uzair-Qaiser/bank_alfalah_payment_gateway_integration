@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:bank_alfalah_payment_gateway_integration/alfalah_payment.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +11,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-        ),
-        home: ProcessPayment()
-    );
+    return MaterialApp(theme: ThemeData(), home: ProcessPayment());
   }
 }
 
@@ -24,15 +21,16 @@ class ProcessPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:AlfalahPaymentIntegration(
+      body: AlfalahPaymentIntegration(
           onSuccess: () {
-            print("Transaction Succeed");
+            log("Transaction Succeed");
           },
           onFailure: () {
-            print("Transaction Failed");
+            log("Transaction Failed");
           },
           merchantDetails: MerchantDetails(
-              firstKey: 'Enter first key here', //You will get keys from bank alfalah
+              firstKey:
+                  'Enter first key here', //You will get keys from bank alfalah
               secondKey: 'Enter second key here',
               merchantId: 'Enter your merchant id',
               storeId: 'Enter your store id',
@@ -40,7 +38,7 @@ class ProcessPayment extends StatelessWidget {
               merchantHash: 'Enter your merchant hash',
               merchantPass: 'Enter merchant pass here',
               merchantUserName: 'Enter merchant username here'),
-          transAmount: "Enter transaction amount here") ,
+          transAmount: "Enter transaction amount here"),
     );
   }
 }

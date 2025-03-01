@@ -7,6 +7,4 @@ class BapgConstants {
   // Response codes Failure/Success
   static const String successCode = 'RC=00';
   static const String failureCode = 'RC=01';
-
-
 }

@@ -8,22 +8,25 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 class PaymentService {
-
-  String _getHashString(Map<String, String?> data,String key1,String key2) {
+  String _getHashString(Map<String, String?> data, String key1, String key2) {
     final sortedKeys = data.keys.toList()..sort();
     String finalString = sortedKeys.map((key) => '$key=${data[key]}').join('&');
 
     final key = encrypt.Key.fromUtf8(key1);
     final iv = encrypt.IV.fromUtf8(key2);
-    final encrypter = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
+    final encrypter =
+        encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
     final encrypted = encrypter.encrypt(finalString, iv: iv);
     return encrypted.base64;
   }
 
-  Future<void> initiatePayment({required WebViewController controller,required String price, required MerchantDetails merchantDetails }) async {
+  Future<void> initiatePayment(
+      {required WebViewController controller,
+      required String price,
+      required MerchantDetails merchantDetails}) async {
     try {
-      var uuid=Uuid();
-      String transactionRefNo=uuid.v4();
+      var uuid = Uuid();
+      String transactionRefNo = uuid.v4();
       final transactionReferenceNumber = transactionRefNo;
 
       var data = {
@@ -39,12 +42,12 @@ class PaymentService {
         '__RequestVerificationToken': '',
       };
 
-      final requestHash = _getHashString(data,merchantDetails.firstKey,merchantDetails.secondKey);
+      final requestHash = _getHashString(
+          data, merchantDetails.firstKey, merchantDetails.secondKey);
       data['HS_RequestHash'] = requestHash;
 
-
       final response = await http.post(
-        Uri.parse(BapgConstants.bapgBaseUrl+BapgConstants.bapgEndpoint),
+        Uri.parse(BapgConstants.bapgBaseUrl + BapgConstants.bapgEndpoint),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(data),
       );
@@ -57,12 +60,19 @@ class PaymentService {
             final stringValue = value.toString();
             return MapEntry(key, stringValue);
           });
-          _loadWebView( responseData: responseData, prevData: prevDataString, controller: controller, price: price, key1: merchantDetails.firstKey, key2: merchantDetails.secondKey);
-        }  else {
+          _loadWebView(
+              responseData: responseData,
+              prevData: prevDataString,
+              controller: controller,
+              price: price,
+              key1: merchantDetails.firstKey,
+              key2: merchantDetails.secondKey);
+        } else {
           if (kDebugMode) {
             print('HTTP Error: ${response.statusCode}, ${response.body}');
           }
-        }}
+        }
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Error: $e');
@@ -94,9 +104,8 @@ class PaymentService {
       'TransactionAmount': price,
     };
 
-    final requestHash = _getHashString(newData,key1,key2);
+    final requestHash = _getHashString(newData, key1, key2);
     newData['RequestHash'] = requestHash;
-
 
     final htmlData = '''
 <!DOCTYPE html>
@@ -198,6 +207,4 @@ display: "none;
 
     controller.loadHtmlString(htmlData);
   }
-
-
 }

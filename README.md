@@ -39,7 +39,7 @@ AlfalahPaymentIntegration(
 //Enter your logic here
     print("❌ Payment Failed!");
   },
-  merchantDetails: myMerchantDetails(
+  merchantDetails: MerchantDetails(
 firstKey: 'Enter first key here', //You will get keys from bank alfalah
 secondKey: 'Enter second key here',
 merchantId: 'Enter your merchant id',
