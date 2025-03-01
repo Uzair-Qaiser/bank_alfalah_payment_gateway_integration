@@ -20,23 +20,30 @@ class AlfalahPaymentIntegration extends StatefulWidget {
       required this.onFailure,
       required this.merchantDetails,
       required this.transAmount});
+
   /// Callback function triggered when the payment is successful.
   final VoidCallback onSuccess;
+
   /// Callback function triggered when the payment fails.
   final VoidCallback onFailure;
+
   /// Merchant details required for processing the payment.
   final MerchantDetails merchantDetails;
+
   /// The transaction amount for the payment.
   final String transAmount;
   @override
   AlfalahPaymentIntegrationState createState() =>
       AlfalahPaymentIntegrationState();
 }
+
 /// Manages WebView integration and payment process.
 class AlfalahPaymentIntegrationState extends State<AlfalahPaymentIntegration> {
   late WebViewController controller;
+
   /// Service instance for handling payment logic.
   final _paymentService = PaymentService();
+
   /// Indicates whether the WebView is currently loading.
   bool isLoading = true;
   @override
@@ -91,6 +98,7 @@ class AlfalahPaymentIntegrationState extends State<AlfalahPaymentIntegration> {
           },
         ),
       );
+
     /// Initiates the payment process after a delay of 2 seconds.
     Future.delayed(const Duration(seconds: 2), () {
       _paymentService.initiatePayment(
